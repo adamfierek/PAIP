@@ -20,8 +20,15 @@ namespace ConsoleApp001
 
             //Console.WriteLine(result);
 
-            paip.Average();
+            //paip.Average();
 
-        }
+            //paip.Validate("94010901233");
+            //paip.Find(Console.ReadLine());
+            var msg2 =paip.Encode("Hello, world!", 50);
+            Console.WriteLine(msg2);
+
+            var msg1 = paip.Decode(msg2, 50);
+            Console.WriteLine(msg1);
+        }   
     }
 }
