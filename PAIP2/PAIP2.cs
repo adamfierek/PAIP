@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PAIP2
@@ -166,7 +168,6 @@ namespace PAIP2
             Console.WriteLine("Nie znaleziono");
             return pesel;
         }
-
         private char Convert(char c, int key)
         {
             if (key > 0)
@@ -188,7 +189,6 @@ namespace PAIP2
 
             return c;
         }
-
         public string Encode(string msg, int key)
         {
             var output = "";
@@ -198,7 +198,6 @@ namespace PAIP2
             }
             return output;
         }
-
         public string Decode(string msg, int key)
         {
             var output = "";
@@ -208,5 +207,29 @@ namespace PAIP2
             }
             return output;
         }
+        public void Countdown(int time)
+        {
+            Console.WriteLine(time);
+            if (time == 0)
+            {
+                Console.Beep();
+                return;
+            }
+            Thread.Sleep(1000);
+            Countdown(--time);
+        }
+
+        public void WriteToFile(string str, string path)
+        {
+            File.WriteAllText(path, str);
+        }
+
+        public string ReadFromFile(string path)
+        {
+            var content = File.ReadAllText(path);
+
+            return content;
+        }
+
     }
 }

@@ -24,11 +24,15 @@ namespace ConsoleApp001
 
             //paip.Validate("94010901233");
             //paip.Find(Console.ReadLine());
-            var msg2 =paip.Encode("Hello, world!", 50);
-            Console.WriteLine(msg2);
+            //var msg2 =paip.Encode("Hello, world!", 50);
+            //Console.WriteLine(msg2);
 
-            var msg1 = paip.Decode(msg2, 50);
-            Console.WriteLine(msg1);
+            //var msg1 = paip.Decode(msg2, 50);
+            //Console.WriteLine(msg1);
+
+            //paip.Countdown(10);
+            paip.WriteToFile("Test 12345");
+            paip.ReadFromFile();
         }   
     }
 }
