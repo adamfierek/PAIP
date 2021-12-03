@@ -5,13 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="PAIP" Height="450" Width="800">
+        Title="Calculator" Height="800" Width="400">
     <Grid>
-        <StackPanel Orientation="Vertical" 
-                    Width="200" 
-                    VerticalAlignment="Center">
-            <Button Height="60" Content="Przycisk"/>
-            <TextBlock/>
-        </StackPanel>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Blue"/>
+                <Setter Property="Height" Value="80"/>
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="36"/>
+                <Setter Property="FontFamily" Value="Comic Sans MS"/>
+                <Setter Property="FontStyle" Value="Normal"/>
+                <Style.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="50"/>
+                    </Style>
+                </Style.Resources>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.ColumnSpan="4" 
+                Grid.Row="0" BorderThickness="1" 
+                BorderBrush="Blue" CornerRadius="5"
+                Margin="5">
+            
+        </Border>
+        <Button Grid.Column="0" Grid.Row="5" 
+                Grid.ColumnSpan="2" Width="170" Content="0"/>
+        <Button Grid.Column="3" Grid.Row="5" Content="="/>
+        <Button Grid.Column="0" Grid.Row="4" Content="1"/>
+        <Button Grid.Column="1" Grid.Row="4" Content="2"/>
+        <Button Grid.Column="2" Grid.Row="4" Content="3"/>
+        <Button Grid.Column="3" Grid.Row="4" Content="+"/>
+        <Button Grid.Column="0" Grid.Row="3" Content="4"/>
+        <Button Grid.Column="1" Grid.Row="3" Content="5"/>
+        <Button Grid.Column="2" Grid.Row="3" Content="6"/>
+        <Button Grid.Column="3" Grid.Row="3" Content="-"/>
+        <Button Grid.Column="0" Grid.Row="2" Content="7"/>
+        <Button Grid.Column="1" Grid.Row="2" Content="8"/>
+        <Button Grid.Column="2" Grid.Row="2" Content="9"/>
+        <Button Grid.Column="3" Grid.Row="2" Content="X"/>
+        <Button Grid.Column="0" Grid.Row="1" Content="C"/>
+        <Button Grid.Column="3" Grid.Row="1" Content="/"/>
     </Grid>
 </Window>

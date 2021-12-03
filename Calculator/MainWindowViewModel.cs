@@ -3,4 +3,4 @@
     internal class MainWindowViewModel
     {
     }
-}
+} 
