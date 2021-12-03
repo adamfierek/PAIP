@@ -41,28 +41,29 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+            
         <Border Grid.ColumnSpan="4" 
                 Grid.Row="0" BorderThickness="1" 
                 BorderBrush="Blue" CornerRadius="5"
                 Margin="5">
-            
+            <TextBlock TextAlignment="Right" FontSize="36" VerticalAlignment="Center" Margin="5" FontFamily="Consolas" Text="{Binding DisplayValue}"/>
         </Border>
         <Button Grid.Column="0" Grid.Row="5" 
-                Grid.ColumnSpan="2" Width="170" Content="0"/>
-        <Button Grid.Column="3" Grid.Row="5" Content="="/>
-        <Button Grid.Column="0" Grid.Row="4" Content="1"/>
-        <Button Grid.Column="1" Grid.Row="4" Content="2"/>
-        <Button Grid.Column="2" Grid.Row="4" Content="3"/>
-        <Button Grid.Column="3" Grid.Row="4" Content="+"/>
-        <Button Grid.Column="0" Grid.Row="3" Content="4"/>
-        <Button Grid.Column="1" Grid.Row="3" Content="5"/>
-        <Button Grid.Column="2" Grid.Row="3" Content="6"/>
+                Grid.ColumnSpan="2" Width="170" Content="0" Command="{Binding TypeNumber}" CommandParameter="0"/>
+        <Button Grid.Column="3" Grid.Row="5" Content="=" Command="{Binding TypeEquals}"/>
+        <Button Grid.Column="0" Grid.Row="4" Content="1" Command="{Binding TypeNumber}" CommandParameter="1"/>
+        <Button Grid.Column="1" Grid.Row="4" Content="2" Command="{Binding TypeNumber}" CommandParameter="2"/>
+        <Button Grid.Column="2" Grid.Row="4" Content="3" Command="{Binding TypeNumber}" CommandParameter="3"/>
+        <Button Grid.Column="3" Grid.Row="4" Content="+" Command="{Binding TypeAdd}"/>
+        <Button Grid.Column="0" Grid.Row="3" Content="4" Command="{Binding TypeNumber}" CommandParameter="4"/>
+        <Button Grid.Column="1" Grid.Row="3" Content="5" Command="{Binding TypeNumber}" CommandParameter="5"/>
+        <Button Grid.Column="2" Grid.Row="3" Content="6" Command="{Binding TypeNumber}" CommandParameter="6"/>
         <Button Grid.Column="3" Grid.Row="3" Content="-"/>
-        <Button Grid.Column="0" Grid.Row="2" Content="7"/>
-        <Button Grid.Column="1" Grid.Row="2" Content="8"/>
-        <Button Grid.Column="2" Grid.Row="2" Content="9"/>
+        <Button Grid.Column="0" Grid.Row="2" Content="7" Command="{Binding TypeNumber}" CommandParameter="7"/>
+        <Button Grid.Column="1" Grid.Row="2" Content="8" Command="{Binding TypeNumber}" CommandParameter="8"/>
+        <Button Grid.Column="2" Grid.Row="2" Content="9" Command="{Binding TypeNumber}" CommandParameter="9"/>
         <Button Grid.Column="3" Grid.Row="2" Content="X"/>
-        <Button Grid.Column="0" Grid.Row="1" Content="C"/>
+        <Button Grid.Column="0" Grid.Row="1" Content="C" Command="{Binding TypeCancel}"/>
         <Button Grid.Column="3" Grid.Row="1" Content="/"/>
     </Grid>
 </Window>
