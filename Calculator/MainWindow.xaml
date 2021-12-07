@@ -8,7 +8,7 @@
         Title="Calculator" Height="800" Width="400">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="Button">
+            <Style TargetType="ContentControl">
                 <Setter Property="Background" Value="Blue"/>
                 <Setter Property="Height" Value="80"/>
                 <Setter Property="Width" Value="80"/>
@@ -26,6 +26,8 @@
                     </Style>
                 </Style.Resources>
             </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type ContentControl}}"/>
+            <Style TargetType="RepeatButton" BasedOn="{StaticResource {x:Type ContentControl}}"/>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -81,7 +83,7 @@
         <Button Grid.Column="1" Grid.Row="2" Content="8" Command="{Binding TypeNumber}" CommandParameter="8"/>
         <Button Grid.Column="2" Grid.Row="2" Content="9" Command="{Binding TypeNumber}" CommandParameter="9"/>
         <Button Grid.Column="3" Grid.Row="2" Content="*" Command="{Binding TypeOperation}" CommandParameter="*"/>
-        <Button Grid.Column="0" Grid.Row="1" Content="C" Command="{Binding TypeCancel}"/>
+        <RepeatButton Interval="100" Grid.Column="0" Grid.Row="1" Content="C" Command="{Binding TypeCancel}"/>
         <Button Grid.Column="3" Grid.Row="1" Content="/" Command="{Binding TypeOperation}" CommandParameter="/"/>
         <Button Grid.Column="1" Grid.Row="1" Content="(" Command="{Binding TypeOperation}" CommandParameter="("/>
         <Button Grid.Column="2" Grid.Row="1" Content=")" Command="{Binding TypeOperation}" CommandParameter=")"/>

@@ -12,7 +12,6 @@ namespace Calculator
         public string ResultValue { get; set; }
         public Command<string> TypeNumber { get; private set; }
         public Command<string> TypeOperation { get; }
-        public Command TypeBackspace { get; }
         public Command TypeCancel { get; }
         public Command TypeEquals { get; }
 
@@ -24,14 +23,8 @@ namespace Calculator
         {
             TypeNumber = new Command<string>(_TypeNumber);
             TypeOperation = new Command<string>(_TypeOperation);
-            TypeBackspace = new Command(_TypeBackspace);
             TypeCancel = new Command(_TypeCancel);
             TypeEquals = new Command(_TypeEquals);
-        }
-
-        private void _TypeBackspace()
-        {
-            throw new NotImplementedException();
         }
 
         private void _TypeOperation(object obj)
@@ -44,11 +37,22 @@ namespace Calculator
             components.Add((string)obj);
             RaisePropertyChanged(nameof(EquationValue));
         }
+
         private void _TypeCancel()
         {
-            components.Clear();
-            numberString = "";
-            ResultValue = "";
+            if(ResultValue!="")
+            {
+                components.Clear();
+                ResultValue = "";
+            }
+            else if (numberString != "")
+            {
+                numberString = numberString.Substring(0, numberString.Length - 1);
+            }
+            else if (components.Count > 0)
+            {
+                components.RemoveAt(components.Count - 1);
+            }
 
             RaisePropertyChanged(nameof(EquationValue));
             RaisePropertyChanged(nameof(ResultValue));
