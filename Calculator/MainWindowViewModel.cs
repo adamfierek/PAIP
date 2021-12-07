@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -7,72 +8,174 @@ namespace Calculator
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string DisplayValue { get; set; } = "";
-        public double CurrentValue { get; set; }
-        public string CurrentMode { get; set; } = "";
+        public string EquationValue => string.Join(null, components) + numberString;
+        public string ResultValue { get; set; }
         public Command<string> TypeNumber { get; private set; }
+        public Command<string> TypeOperation { get; }
+        public Command TypeBackspace { get; }
         public Command TypeCancel { get; }
-        public Command TypeAdd { get; }
         public Command TypeEquals { get; }
+
+        private List<string> components = new();
+
+        private string numberString = "";
 
         public MainWindowViewModel()
         {
             TypeNumber = new Command<string>(_TypeNumber);
+            TypeOperation = new Command<string>(_TypeOperation);
+            TypeBackspace = new Command(_TypeBackspace);
             TypeCancel = new Command(_TypeCancel);
-            TypeAdd = new Command(_TypeAdd);
             TypeEquals = new Command(_TypeEquals);
         }
 
-        private void _TypeEquals()
+        private void _TypeBackspace()
         {
-            switch(CurrentMode)
-            {
-                case "+":
-                    {
-                        CurrentValue = CurrentValue + Convert.ToDouble(DisplayValue);
-                        break;
-                    }
-            }
-            CurrentMode = "";
-            DisplayValue = CurrentValue.ToString();
-            RaisePropertyChanged(nameof(DisplayValue));
+            throw new NotImplementedException();
         }
 
-        private void _TypeAdd()
+        private void _TypeOperation(object obj)
         {
-            if(CurrentMode!="+")
+            if (numberString != "")
             {
-                CurrentMode = "+";
-                CurrentValue = Convert.ToDouble(DisplayValue); 
+                components.Add(numberString);
+                numberString = "";
             }
-
-            DisplayValue = "";
-            RaisePropertyChanged(nameof(DisplayValue));
+            components.Add((string)obj);
+            RaisePropertyChanged(nameof(EquationValue));
         }
-
         private void _TypeCancel()
         {
-            DisplayValue = "";
-            RaisePropertyChanged(nameof(DisplayValue));
-            CurrentMode = "";
+            components.Clear();
+            numberString = "";
+            ResultValue = "";
+
+            RaisePropertyChanged(nameof(EquationValue));
+            RaisePropertyChanged(nameof(ResultValue));
         }
 
         private void _TypeNumber(object obj)
         {
-            DisplayValue = DisplayValue + obj;
-            RaisePropertyChanged(nameof(DisplayValue));
+            numberString += (string)obj;
+            RaisePropertyChanged(nameof(EquationValue));
+        }
+
+        private void _TypeEquals()
+        {
+            if (numberString != "")
+            {
+                components.Add(numberString);
+                numberString = "";
+            }
+            ResultValue = GetResult();
+            RaisePropertyChanged(nameof(ResultValue));
+        }
+
+
+        private string GetResult()
+        {
+            var operatorList = new List<string> { "+", "-", "/", "*", "(", ")" };
+            var componentsRnp = new List<string>();
+            var stack = new Stack<string>();
+            foreach (var c in components)
+            {
+                if (!operatorList.Contains(c))
+                {
+                    componentsRnp.Add(c);
+                    continue;
+                }
+                else if (c == "(")
+                {
+                    stack.Push(c);
+                    continue;
+                }
+                else if (c == ")")
+                {
+                    while (stack.Count > 0)
+                    {
+                        var op = stack.Pop();
+                        if (op == "(") break;
+                        componentsRnp.Add(op);
+                    }
+                }
+                else
+                {
+                    var s_priority = -1;
+                    var c_priority = c == "+" || c == "-" || c == "(" ? 0 : 1;
+
+                    if (stack.Count != 0)
+                    {
+                        var s = stack.Peek();
+                        s_priority = s == "+" || s == "-" || s == "(" ? 0 : 1;
+                    }
+
+                    if (c_priority <= s_priority)
+                    {
+                        while (stack.Count > 0)
+                        {
+                            var s = stack.Peek();
+                            s_priority = s == "+" || s == "-" || s == "(" ? 0 : 1;
+                            if (s_priority >= c_priority)
+                            {
+                                if (s != "(" && s != ")")
+                                {
+                                    componentsRnp.Add(stack.Pop());
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    stack.Push(c);
+                }
+            }
+
+            while (stack.Count > 0)
+            {
+                componentsRnp.Add(stack.Pop());
+            }
+
+            stack.Clear();
+
+            foreach (var c in componentsRnp)
+            {
+                if (!operatorList.Contains(c))
+                {
+                    stack.Push(c);
+                    continue;
+                }
+                else
+                {
+                    var a = Convert.ToDouble(stack.Pop());
+                    var b = Convert.ToDouble(stack.Pop());
+                    switch (c)
+                    {
+                        case "+": stack.Push((b + a).ToString()); break;
+                        case "-": stack.Push((b - a).ToString()); break;
+                        case "*": stack.Push((b * a).ToString()); break;
+                        case "/": stack.Push((b / a).ToString()); break;
+                    }
+                }
+            }
+
+            return stack.Pop();
         }
     }
 
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged([CallerMemberName] string name=null)
+        public void RaisePropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
-
 
     public class Command : ICommand
     {
@@ -118,4 +221,4 @@ namespace Calculator
         }
     }
 
-} 
+}
