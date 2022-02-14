@@ -31,8 +31,6 @@ namespace ConsoleApp001
             //Console.WriteLine(msg1);
 
             //paip.Countdown(10);
-            paip.WriteToFile("Test 12345");
-            paip.ReadFromFile();
         }   
     }
 }
