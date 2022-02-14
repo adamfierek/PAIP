@@ -7,7 +7,9 @@ namespace WebAPI.Hubs
     {
         public async Task SendMessage(string message)
         {
-            await Clients.Others.SendAsync("ReceiveMessage", message);
+            var connectionId = Context.ConnectionId;
+            await Clients.Others.SendAsync("ReceiveMessage",
+                $"{connectionId}: {message}");
         }
     }
 }
