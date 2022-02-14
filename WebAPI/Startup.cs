@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Controllers;
+using WebAPI.Services;
 
 namespace WebAPI
 {
@@ -16,6 +17,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<LibraryService>();
+            //.NET 6 => builder.Services.AddSingleton<LibraryService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
