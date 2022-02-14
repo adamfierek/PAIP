@@ -34,5 +34,15 @@ namespace WebAPI.Controllers
             var message = result ? "Liczba jest pierwsza" : "Liczba nie jest pierwsza";
             return Ok(message);
         }
+
+        [HttpPost]
+        public IActionResult IsPrimePost(int number)
+        {
+            var result = _libraryService.IsPrime(number);
+            var message = result ? "Liczba jest pierwsza" : "Liczba nie jest pierwsza";
+            return Ok(message);
+        }
+
+
     }
 }

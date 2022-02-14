@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Controllers;
+using WebAPI.Hubs;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -19,6 +20,11 @@ namespace WebAPI
             services.AddControllers();
             services.AddSingleton<LibraryService>();
             //.NET 6 => builder.Services.AddSingleton<LibraryService>();
+
+
+            services.AddSignalR();
+
+            //.NET 6 => builder.Services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,7 +39,10 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/signalr/chat");
             });
+
+            //.NET 6 => app.MapHub<ChatHub>("/signalr/chat");
         }
     }
 }
