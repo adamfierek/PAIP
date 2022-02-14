@@ -20,11 +20,19 @@ namespace WebAPI.Controllers
             return Ok("Witaj API!");
         }
 
-        [HttpGet("validate/{pesel}")]
-        public IActionResult Validate(string pesel)
+        [HttpGet("validate")]
+        public IActionResult Validate([FromQuery] string pesel)
         {
-            var result = _libraryService.ValidatePesel(pesela);
+            var result = _libraryService.ValidatePesel(pesel);
             return Ok(result);
+        }
+
+        [HttpGet("prime/{number:int}")]
+        public IActionResult IsPrime(int number)
+        {
+            var result = _libraryService.IsPrime(number);
+            var message = result ? "Liczba jest pierwsza" : "Liczba nie jest pierwsza";
+            return Ok(message);
         }
     }
 }
